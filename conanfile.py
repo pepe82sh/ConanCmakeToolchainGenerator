@@ -7,12 +7,26 @@ from conans.model.conan_file import get_env_context_manager
 
 
 def _cmake_escape_backslash(inp: str):
+    """
+    Escapes backslashes for cmake. Basically it replaces any \ with \\
+    :param inp: Input string
+    :return: Input string with backslashes escaped for cmake
+    """
     return inp.replace("\\", "\\\\")
 
 
 class CmakeToolchain(CMakePathsGenerator):
+    """
+    conan generator for cmake toolchains. Generates a file conaining all definitions and environment variables
+    that would usually be set by conan when invoking cmake. Additionally the functionality of the built in
+    cmake_paths generator is kept.
+    """
 
     def _get_cmake_environment_setters(self):
+        """
+        Detect all environment changes made by conan and convert them to cmake commands
+        :return: List of lines to print into a cmake file
+        """
         old_env = dict(os.environ)
         with get_env_context_manager(self.conanfile):
             ret = []
@@ -24,6 +38,11 @@ class CmakeToolchain(CMakePathsGenerator):
             return ret
 
     def _get_cmake_definitions(self):
+        """
+        Detect all definitions conan sends to cmake by command line and convert them to cmake commands. Removes the
+        CONAN_EXPORTED definition, so that users may check if conan has been invoked or not.
+        :return: List of lines to print into a cmake file
+        """
         with get_env_context_manager(self.conanfile):
             ret = []
             build_type = self.conanfile.settings.get_safe("build_type")
@@ -37,10 +56,13 @@ class CmakeToolchain(CMakePathsGenerator):
 
     @property
     def filename(self):
+        """ Name of the output file """
         return "conan_toolchain.cmake"
 
     @property
     def content(self):
+        """ Content of the output file. """
+        # environment and definitions will only be set if cmake has not been invoked by conan
         lines=["if(NOT CONAN_EXPORTED)"]
         lines.extend(self._get_cmake_environment_setters())
         lines.extend(self._get_cmake_definitions())
