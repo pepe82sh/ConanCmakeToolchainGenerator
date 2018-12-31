@@ -77,6 +77,7 @@ class CmakeToolchainGeneratorPackage(ConanFile):
                   "by invoking cmake instead of conan build"
     url = 'https://github.com/pepe82sh/ConanCmakeToolchainGenerator'
     license = 'MIT'
+    build_policy = "missing"
 
     def build(self):
         pass
