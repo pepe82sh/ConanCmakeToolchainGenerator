@@ -11,6 +11,7 @@ def _cmake_escape_backslash(inp: str):
 
 
 class CmakeToolchain(CMakePathsGenerator):
+
     def _get_cmake_environment_setters(self):
         old_env = dict(os.environ)
         with get_env_context_manager(self.conanfile):
@@ -30,7 +31,6 @@ class CmakeToolchain(CMakePathsGenerator):
             def_builder = CMakeDefinitionsBuilder(self.conanfile, generator=generator, forced_build_type=build_type)
             definitions = def_builder.get_definitions()
             del definitions["CONAN_EXPORTED"]
-            print(definitions)
             for name, value in definitions.items():
                 ret.append("set({name} {value})".format(name=name, value=value))
             return ret

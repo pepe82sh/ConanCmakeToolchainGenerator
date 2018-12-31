@@ -9,13 +9,16 @@ class HelloTestConan(ConanFile):
     generators = "CmakeToolchain"
 
     def build(self):
+        # run externally
         self.run("cmake ../..")
         self.run("cmake --build .")
-        #cmake = CMake(self)
+
+        # run in conan
+        cmake = CMake(self)
         # Current dir is "test_package/build/<build_id>" and CMakeLists.txt is
         # in "test_package"
-        #cmake.configure()
-        #cmake.build()
+        cmake.configure()
+        cmake.build()
 
     def imports(self):
         pass
