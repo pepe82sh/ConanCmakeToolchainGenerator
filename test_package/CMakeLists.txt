@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.12)
 include(${CMAKE_BINARY_DIR}/conan_toolchain.cmake)
 project(PackageTest CXX)
 
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
+
 # Check cmake values
 if(NOT CONAN_COMPILER)
     message(FATAL_ERROR "CONAN_COMPILER was expected but not set.")
