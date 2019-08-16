@@ -1,11 +1,13 @@
 # ConanCmakeToolchainGenerator
 
-This conan generator creates the file `conan_toolchain.cmake`
-inside your build folder. This file can than be imported in your
-`CMakeLists.txt`. This way you'll be able to access all environment
+This conan generator creates the files `conan_toolchain.cmake`
+and `conanbuildinfo.cmake` inside your build folder. These files 
+can than be imported in your `CMakeLists.txt`. `conan_toolchain.cmake`
+has to be included prior to the `project` macro, while `conanbuildinfo.cmake`
+has to be included after the `project` macro.
+This way you'll be able to access all environment
 variables and cmake definitions that will be set when the project
-is build inside conan. `CMAKE_MODULE_PATH` and `CMAKE_PREFIX_PATH`
-are also set like in the `cmake_paths` generator.
+is build inside conan.
 
 ## Usage
 In a fully automated example, you'd want to call conan install
@@ -26,6 +28,8 @@ endif()
 include( ${CMAKE_BINARY_DIR}/conan_toolchain.cmake )
 
 project(test)
+
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 
 add_library(test test.cpp)
 ```
