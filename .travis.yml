@@ -10,8 +10,8 @@ install:
 # Automatic detection of your arch, compiler, etc.
   - conan user
 script:
-# Download dependencies and build project
-  - conan install .
+# Create the package
+  - conan create . test/testing
 # Call your build system
 #  - cmake . -G "Unix Makefiles"
 #  - cmake --build .
