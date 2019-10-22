@@ -1,0 +1,19 @@
+os: linux
+language: python
+python: "3.7"
+dist: xenial
+compiler:
+  - gcc
+install:
+# Install conan
+  - pip install conan
+# Automatic detection of your arch, compiler, etc.
+  - conan user
+script:
+# Create the package
+  - conan create . test/testing
+# Call your build system
+#  - cmake . -G "Unix Makefiles"
+#  - cmake --build .
+# Run your tests
+#  - ctest .
