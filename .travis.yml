@@ -9,9 +9,11 @@ install:
   - pip install conan
 # Automatic detection of your arch, compiler, etc.
   - conan user
+# Add remote
+  - conan remote add bintray https://dl.bintray.com/pepe82sh/test
 script:
 # Create the package
-  - conan create . test/testing
+  - conan create -s compiler=gcc -s compiler.libcxx=libstdc++11 -s compiler.version=7.3 -s arch=armv7 . test/testing
 # Call your build system
 #  - cmake . -G "Unix Makefiles"
 #  - cmake --build .

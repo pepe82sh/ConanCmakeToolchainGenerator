@@ -7,6 +7,7 @@ from conans.util.env_reader import get_env
 class HelloTestConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     generators = "CmakeToolchain"
+    build_requires = "arm-none-eabi-gcc_installer/0.2@pepe/test"
 
     def build(self):
         # run externally
