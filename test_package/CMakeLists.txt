@@ -10,6 +10,10 @@ if(NOT CONAN_COMPILER)
     message(FATAL_ERROR "CONAN_COMPILER was expected but not set.")
 endif()
 
+# Check for CONAN_CMAKE_TOOLCHAIN_FILE (Issue #1)
+if(NOT CONAN_CMAKE_TOOLCHAIN_FILE)
+    message(FATAL_ERROR "CONAN_COMPILER was expected but not set.")
+endif()
 
 add_library(example example.cpp)
 #target_link_libraries(example ${CONAN_LIBS})
