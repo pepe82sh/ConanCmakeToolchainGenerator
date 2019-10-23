@@ -12,7 +12,7 @@ endif()
 
 # Check for CONAN_CMAKE_TOOLCHAIN_FILE (Issue #1)
 if(NOT CONAN_CMAKE_TOOLCHAIN_FILE)
-    message(FATAL_ERROR "CONAN_COMPILER was expected but not set.")
+    message(FATAL_ERROR "CONAN_CMAKE_TOOLCHAIN_FILE was expected but not set.")
 endif()
 
 add_library(example example.cpp)
