@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/pepe82sh/ConanCmakeToolchainGenerator.svg?branch=master)](https://travis-ci.com/pepe82sh/ConanCmakeToolchainGenerator)
+
+
 # ConanCmakeToolchainGenerator
 
 This conan generator creates the files `conan_toolchain.cmake`
