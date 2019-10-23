@@ -10,7 +10,7 @@ install:
 # Automatic detection of your arch, compiler, etc.
   - conan user
 # Add remote
-  - conan remote add bintray https://dl.bintray.com/pepe82sh/test
+  - conan remote add bintray https://api.bintray.com/conan/pepe82sh/test --insert
 script:
 # Create the package
   - conan create -s compiler=gcc -s compiler.libcxx=libstdc++11 -s compiler.version=7.3 -s arch=armv7 . test/testing
