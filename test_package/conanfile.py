@@ -1,7 +1,4 @@
-import os
-
-from conans import ConanFile, CMake, tools
-from conans.util.env_reader import get_env
+from conans import ConanFile, CMake
 
 
 class HelloTestConan(ConanFile):
@@ -23,12 +20,9 @@ class HelloTestConan(ConanFile):
 
     def imports(self):
         pass
-        #self.copy("*.dll", dst="bin", src="bin")
-        #self.copy("*.dylib*", dst="bin", src="lib")
-        #self.copy('*.so*', dst='bin', src='lib')
 
     def test(self):
         pass
-        #if not tools.cross_building(self.settings):
-        #    os.chdir("bin")
-        #    self.run(".%sexample" % os.sep)
+
+    def package(self):
+        pass
