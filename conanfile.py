@@ -79,6 +79,17 @@ class CmakeToolchain(CMakeGenerator):
                                                  definitions=self._get_cmake_definitions())
         return {super().filename: super().content,
                 "conan_toolchain.cmake": content}
+    
+    @staticmethod
+    def get_version():
+        try:
+            out = version_runner(["cmake", "--version"])
+            version_line = decode_text(out).split('\n', 1)[0]
+            version_str = version_line.rsplit(' ', 1)[-1]
+            return Version(version_str)
+        except Exception as e:
+            raise ConanException("Error retrieving CMake version: '{}'".format(e))
+
 
 
 class CmakeToolchainGeneratorPackage(ConanFile):
@@ -97,13 +108,3 @@ class CmakeToolchainGeneratorPackage(ConanFile):
         self.cpp_info.includedirs = []
         self.cpp_info.libdirs = []
         self.cpp_info.bindirs = []
-    
-    @staticmethod
-    def get_version():
-        try:
-            out = version_runner(["cmake", "--version"])
-            version_line = decode_text(out).split('\n', 1)[0]
-            version_str = version_line.rsplit(' ', 1)[-1]
-            return Version(version_str)
-        except Exception as e:
-            raise ConanException("Error retrieving CMake version: '{}'".format(e))
