@@ -59,7 +59,7 @@ class CmakeToolchain(CMakeGenerator):
             generator = get_generator(self.conanfile.settings)
             def_builder = CMakeDefinitionsBuilder(self.conanfile, generator=generator, forced_build_type=build_type)
             cmake_version = self.get_version()
-            definitions = def_builder.get_definitions()
+            definitions = def_builder.get_definitions(cmake_version)
             if "CONAN_EXPORTED" in definitions:
                 del definitions["CONAN_EXPORTED"]
             for name, value in definitions.items():
