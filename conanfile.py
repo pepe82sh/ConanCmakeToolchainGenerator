@@ -4,6 +4,10 @@ from conans.client.build.cmake_flags import CMakeDefinitionsBuilder, get_generat
 from conans import ConanFile
 from conans.util.env_reader import get_env
 from conans.model.conan_file import get_env_context_manager
+from conans.util.runners import version_runner
+from conans.util.files import decode_text
+from conans.model.version import Version
+
 
 conan_toolchain_content = """
 if(NOT CONAN_EXPORTED)
@@ -54,6 +58,7 @@ class CmakeToolchain(CMakeGenerator):
             build_type = self.conanfile.settings.get_safe("build_type")
             generator = get_generator(self.conanfile.settings)
             def_builder = CMakeDefinitionsBuilder(self.conanfile, generator=generator, forced_build_type=build_type)
+            cmake_version = self.get_version()
             definitions = def_builder.get_definitions()
             if "CONAN_EXPORTED" in definitions:
                 del definitions["CONAN_EXPORTED"]
@@ -92,3 +97,13 @@ class CmakeToolchainGeneratorPackage(ConanFile):
         self.cpp_info.includedirs = []
         self.cpp_info.libdirs = []
         self.cpp_info.bindirs = []
+    
+    @staticmethod
+    def get_version():
+        try:
+            out = version_runner(["cmake", "--version"])
+            version_line = decode_text(out).split('\n', 1)[0]
+            version_str = version_line.rsplit(' ', 1)[-1]
+            return Version(version_str)
+        except Exception as e:
+            raise ConanException("Error retrieving CMake version: '{}'".format(e))
